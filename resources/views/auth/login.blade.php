@@ -41,7 +41,7 @@
                 </p>
             </div>
             <!-- Login Form -->
-            <form action="{{ route('login') }}" method="POST" class="w-full flex flex-col gap-lg">
+            <form action="{{ route('login.attempt') }}" method="POST" class="w-full flex flex-col gap-lg">
                 @csrf
 
                 @if (session('error'))
