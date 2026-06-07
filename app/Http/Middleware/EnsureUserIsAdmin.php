@@ -11,7 +11,7 @@ class EnsureUserIsAdmin
     public function handle(Request $request, Closure $next): Response
     {
         if ((int) $request->user()?->access_level !== 1) {
-            abort(403, 'Acesso permitido apenas para administradores.');
+            return redirect()->route('error');
         }
 
         return $next($request);

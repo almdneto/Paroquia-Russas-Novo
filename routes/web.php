@@ -16,6 +16,7 @@ Route::get('/register/form', [AuthController::class, 'registerForm'])->name('reg
 Route::post('/register', [AuthController::class, 'register'])->name('register');
 
 Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth')->name('logout');
+Route::get('/error', fn () => view('error'))->name('error');
 
 
 // Rotas de gestão de usuários

@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-<link
+    <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Geist:wght@600;700;800&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
         rel="stylesheet" />
     <link
@@ -15,6 +15,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=Inter:wght@100..900&amp;display=swap"
         rel="stylesheet" />
+    <title>Acesso Negado - Paróquia Nossa Senhora do Rosário</title>
 </head>
 
 <body class="error-page-bg font-body-md text-on-surface antialiased min-h-screen flex items-center justify-center p-md">
@@ -48,16 +49,15 @@
         </div>
         <!-- Action Buttons -->
         <div class="w-full flex flex-col gap-sm">
-            <a class="group relative flex items-center justify-center gap-sm bg-primary text-on-primary font-label-md text-label-md py-md px-xl rounded-xl transition-all duration-200 hover:bg-primary-container active:scale-95 shadow-md hover:shadow-lg"
-                href="#">
-                <span class="material-symbols-outlined text-[20px]" data-icon="dashboard">dashboard</span>
-                Voltar ao Dashboard
-            </a>
-            <a class="flex items-center justify-center gap-sm bg-transparent border border-outline text-primary font-label-md text-label-md py-md px-xl rounded-xl transition-all duration-200 hover:bg-surface-container-high active:scale-95"
-                href="#">
-                <span class="material-symbols-outlined text-[20px]" data-icon="login">login</span>
-                Fazer Login com outra conta
-            </a>
+            <form action="{{ route('logout') }}" method="POST" class="w-full">
+                @csrf
+                <button
+                    class="w-full flex items-center justify-center gap-sm bg-transparent border border-outline text-primary font-label-md text-label-md py-md px-xl rounded-xl transition-all duration-200 hover:bg-surface-container-high active:scale-95 cursor-pointer"
+                    type="submit">
+                    <span class="material-symbols-outlined text-[20px]" data-icon="login">login</span>
+                    Fazer Login com outra conta
+                </button>
+            </form>
         </div>
         <!-- Support Link -->
         <div class="mt-xl pt-lg border-t border-outline-variant/30 w-full">
@@ -88,7 +88,7 @@
     </div>
     <script>
         // Simple micro-interaction for buttons
-        document.querySelectorAll('a').forEach(button => {
+        document.querySelectorAll('a, button').forEach(button => {
             button.addEventListener('mouseenter', () => {
                 const icon = button.querySelector('.material-symbols-outlined');
                 if (icon) {
