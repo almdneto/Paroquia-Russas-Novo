@@ -21,7 +21,7 @@
 
 <body class="bg-serene-gradient min-h-screen flex items-center justify-center font-body-md text-on-surface p-md">
     <!-- Auth Shell Suppression: Hide Sidebar and Top Nav for Transactional Flow -->
-    <main class="w-full max-w-md animate-in fade-in slide-in-from-bottom-4 duration-700">
+    <main class="w-full max-w-[720px] animate-in fade-in slide-in-from-bottom-4 duration-700">
         <!-- Devotional Card & Logo Section -->
         <div class="text-center mb-lg">
             <div
@@ -38,31 +38,42 @@
         </div>
         <!-- Registration Form Card -->
         <div
-            class="glass-effect rounded-3xl p-lg md:p-xl shadow-[0_4px_20px_rgba(21,128,61,0.05)] border border-outline-variant/30">
+            class="glass-effect rounded-xl p-lg md:p-xl shadow-[0_4px_20px_rgba(21,128,61,0.05)] border border-outline-variant/30">
             <h2 class="font-headline-md text-headline-md text-on-surface mb-lg text-center">Criar Nova Conta</h2>
-            <form class="flex flex-col gap-md" id="registerForm">
+            <form action="{{ route('register') }}" method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-md md:gap-lg"
+                id="registerForm">
+                @csrf
+
                 <!-- Nome Completo -->
-                <div class="flex flex-col gap-xs">
-                    <label class="font-label-md text-label-md text-on-surface-variant ml-xs" for="fullName">Nome
+                <div class="flex flex-col gap-xs md:col-span-2">
+                    <label class="font-label-md text-label-md text-on-surface-variant ml-xs" for="name">Nome
                         Completo</label>
                     <div class="relative">
                         <span
-                            class="material-symbols-outlined absolute left-md top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">person</span>
+                            class="material-symbols-outlined absolute left-md top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px] pointer-events-none">person</span>
                         <input
-                            class="w-full pl-xl pr-md py-md rounded-xl bg-surface-container-lowest border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary transition-all font-body-md"
-                            id="fullName" name="fullName" placeholder="Seu nome completo" required="" type="text" />
+                            class="w-full pl-14 pr-md py-md rounded-xl bg-surface-container-lowest border border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary transition-all font-body-md outline-none"
+                            id="name" name="name" placeholder="Seu nome completo" required type="text"
+                            value="{{ old('name') }}" />
                     </div>
+                    @error('name')
+                        <p class="ml-xs text-sm text-red-600">{{ $message }}</p>
+                    @enderror
                 </div>
                 <!-- E-mail -->
-                <div class="flex flex-col gap-xs">
+                <div class="flex flex-col gap-xs md:col-span-2">
                     <label class="font-label-md text-label-md text-on-surface-variant ml-xs" for="email">E-mail</label>
                     <div class="relative">
                         <span
-                            class="material-symbols-outlined absolute left-md top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">mail</span>
+                            class="material-symbols-outlined absolute left-md top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px] pointer-events-none">mail</span>
                         <input
-                            class="w-full pl-xl pr-md py-md rounded-xl bg-surface-container-lowest border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary transition-all font-body-md"
-                            id="email" name="email" placeholder="exemplo@email.com" required="" type="email" />
+                            class="w-full pl-14 pr-md py-md rounded-xl bg-surface-container-lowest border border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary transition-all font-body-md outline-none"
+                            id="email" name="email" placeholder="exemplo@email.com" required type="email"
+                            value="{{ old('email') }}" />
                     </div>
+                    @error('email')
+                        <p class="ml-xs text-sm text-red-600">{{ $message }}</p>
+                    @enderror
                 </div>
                 <!-- Senha -->
                 <div class="flex flex-col gap-xs">
@@ -70,29 +81,35 @@
                         for="password">Senha</label>
                     <div class="relative">
                         <span
-                            class="material-symbols-outlined absolute left-md top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">lock</span>
+                            class="material-symbols-outlined absolute left-md top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px] pointer-events-none">lock</span>
                         <input
-                            class="w-full pl-xl pr-md py-md rounded-xl bg-surface-container-lowest border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary transition-all font-body-md"
-                            id="password" name="password" placeholder="Crie uma senha forte" required=""
+                            class="w-full pl-14 pr-md py-md rounded-xl bg-surface-container-lowest border border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary transition-all font-body-md outline-none"
+                            id="password" name="password" placeholder="Crie uma senha forte" required
                             type="password" />
                     </div>
+                    @error('password')
+                        <p class="ml-xs text-sm text-red-600">{{ $message }}</p>
+                    @enderror
                 </div>
                 <!-- Confirmação de Senha -->
                 <div class="flex flex-col gap-xs">
                     <label class="font-label-md text-label-md text-on-surface-variant ml-xs"
-                        for="confirmPassword">Confirmar Senha</label>
+                        for="password_confirmation">Confirmar Senha</label>
                     <div class="relative">
                         <span
-                            class="material-symbols-outlined absolute left-md top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">verified_user</span>
+                            class="material-symbols-outlined absolute left-md top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px] pointer-events-none">verified_user</span>
                         <input
-                            class="w-full pl-xl pr-md py-md rounded-xl bg-surface-container-lowest border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary transition-all font-body-md"
-                            id="confirmPassword" name="confirmPassword" placeholder="Repita sua senha" required=""
+                            class="w-full pl-14 pr-md py-md rounded-xl bg-surface-container-lowest border border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary transition-all font-body-md outline-none"
+                            id="password_confirmation" name="password_confirmation" placeholder="Repita sua senha" required
                             type="password" />
                     </div>
+                    @error('password_confirmation')
+                        <p class="ml-xs text-sm text-red-600">{{ $message }}</p>
+                    @enderror
                 </div>
                 <!-- Submit Button -->
                 <button
-                    class="mt-md w-full bg-primary-container text-on-primary-container font-headline-md text-headline-md py-md rounded-xl hover:opacity-90 active:scale-[0.98] transition-all shadow-md flex items-center justify-center gap-sm"
+                    class="mt-md w-full bg-primary-container text-on-primary-container font-headline-md text-headline-md py-md rounded-xl hover:opacity-90 active:scale-[0.98] transition-all shadow-md flex items-center justify-center gap-sm md:col-span-2"
                     type="submit">
                     Cadastrar
                     <span class="material-symbols-outlined">arrow_forward</span>
@@ -102,7 +119,8 @@
             <div class="mt-lg pt-lg border-t border-outline-variant/30 text-center">
                 <p class="font-body-md text-on-surface-variant">
                     Já possui uma conta?
-                    <a class="text-primary font-semibold hover:underline transition-all" href="#">Entrar</a>
+                    <a class="text-primary font-semibold hover:underline transition-all"
+                        href="{{ route('login.form') }}">Entrar</a>
                 </p>
             </div>
         </div>
@@ -135,21 +153,6 @@
                 });
             });
 
-            form.addEventListener('submit', (e) => {
-                e.preventDefault();
-                const btn = e.target.querySelector('button');
-                const originalText = btn.innerHTML;
-
-                // Visual feedback of processing
-                btn.innerHTML = '<span class="material-symbols-outlined animate-spin">progress_activity</span> Carregando...';
-                btn.disabled = true;
-
-                setTimeout(() => {
-                    btn.innerHTML = originalText;
-                    btn.disabled = false;
-                    alert('Simulação de cadastro enviada com sucesso! Bem-vindo à nossa comunidade.');
-                }, 1500);
-            });
         });
     </script>
 </body>

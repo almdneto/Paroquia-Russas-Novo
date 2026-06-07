@@ -41,17 +41,29 @@
                 </p>
             </div>
             <!-- Login Form -->
-            <form action="#" class="w-full flex flex-col gap-lg">
+            <form action="{{ route('login') }}" method="POST" class="w-full flex flex-col gap-lg">
+                @csrf
+
+                @if (session('error'))
+                    <div class="w-full rounded-lg border border-red-200 bg-red-50 px-md py-sm text-sm text-red-700">
+                        {{ session('error') }}
+                    </div>
+                @endif
+
                 <!-- Email Input Group -->
                 <div class="flex flex-col gap-xs">
                     <label class="font-label-md text-label-md text-on-surface-variant px-xs" for="email">E-mail</label>
                     <div class="relative group">
                         <span
-                            class="material-symbols-outlined absolute left-md top-1/2 -translate-y-1/2 text-on-surface-variant group-focus-within:text-primary transition-colors">mail</span>
+                            class="material-symbols-outlined absolute left-md top-1/2 -translate-y-1/2 text-on-surface-variant group-focus-within:text-primary transition-colors pointer-events-none">mail</span>
                         <input
-                            class="w-full pl-12 pr-md py-md bg-surface border border-secondary-container rounded-lg font-body-md text-on-surface placeholder:text-outline-variant focus:border-primary focus:ring-1 focus:ring-primary transition-all outline-none"
-                            id="email" placeholder="exemplo@email.com" required="" type="email" />
+                            class="w-full pl-14 pr-md py-md bg-surface border border-secondary-container rounded-lg font-body-md text-on-surface placeholder:text-outline-variant focus:border-primary focus:ring-1 focus:ring-primary transition-all outline-none"
+                            id="email" name="email" placeholder="exemplo@email.com" required value="{{ old('email') }}"
+                            type="email" />
                     </div>
+                    @error('email')
+                        <p class="px-xs text-sm text-red-600">{{ $message }}</p>
+                    @enderror
                 </div>
                 <!-- Password Input Group -->
                 <div class="flex flex-col gap-xs">
@@ -60,16 +72,19 @@
                     </div>
                     <div class="relative group">
                         <span
-                            class="material-symbols-outlined absolute left-md top-1/2 -translate-y-1/2 text-on-surface-variant group-focus-within:text-primary transition-colors">lock</span>
+                            class="material-symbols-outlined absolute left-md top-1/2 -translate-y-1/2 text-on-surface-variant group-focus-within:text-primary transition-colors pointer-events-none">lock</span>
                         <input
-                            class="w-full pl-12 pr-12 py-md bg-surface border border-secondary-container rounded-lg font-body-md text-on-surface placeholder:text-outline-variant focus:border-primary focus:ring-1 focus:ring-primary transition-all outline-none"
-                            id="password" placeholder="Sua senha segura" required="" type="password" />
+                            class="w-full pl-14 pr-12 py-md bg-surface border border-secondary-container rounded-lg font-body-md text-on-surface placeholder:text-outline-variant focus:border-primary focus:ring-1 focus:ring-primary transition-all outline-none"
+                            id="password" name="password" placeholder="Sua senha segura" required type="password" />
                         <button
                             class="absolute right-md top-1/2 -translate-y-1/2 text-on-surface-variant hover:text-primary transition-colors"
                             onclick="togglePasswordVisibility()" type="button">
                             <span class="material-symbols-outlined" id="eye-icon">visibility</span>
                         </button>
                     </div>
+                    @error('password')
+                        <p class="px-xs text-sm text-red-600">{{ $message }}</p>
+                    @enderror
                 </div>
                 <!-- Remember & Forgot Password -->
                 <div class="flex items-center justify-between font-label-md text-label-md">
@@ -77,7 +92,7 @@
                         <div class="relative flex items-center">
                             <input
                                 class="peer h-5 w-5 cursor-pointer appearance-none rounded border border-secondary-container bg-surface checked:bg-primary checked:border-primary transition-all focus:ring-offset-0 focus:ring-0"
-                                type="checkbox" />
+                                name="remember" type="checkbox" />
                             <span
                                 class="material-symbols-outlined absolute opacity-0 peer-checked:opacity-100 text-on-primary text-sm left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none">check</span>
                         </div>
@@ -88,6 +103,7 @@
                 </div>
                 <!-- Submit Button -->
                 <button
+                    id="btt-submit"
                     class="w-full py-md bg-primary-container hover:bg-primary text-on-primary font-title-lg text-title-lg rounded-xl shadow-sm hover:shadow-md active:scale-[0.98] transition-all duration-200 flex items-center justify-center gap-sm"
                     type="submit">
                     Acessar o Sistema
@@ -97,7 +113,8 @@
             <!-- Secondary Action -->
             <div class="mt-xl text-center">
                 <p class="font-body-md text-body-md text-on-surface-variant">
-                    Não tem uma conta? <a class="text-primary font-semibold hover:underline" href="#">Crie uma aqui</a>
+                    Não tem uma conta? <a class="text-primary font-semibold hover:underline"
+                        href="{{ route('register.form') }}">Crie uma aqui</a>
                 </p>
             </div>
         </div>
@@ -131,20 +148,6 @@
             }
         }
 
-        // Form submission animation mock
-        document.querySelector('form').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const btn = e.target.querySelector('button');
-            const originalContent = btn.innerHTML;
-            btn.innerHTML = `<span class="material-symbols-outlined animate-spin">progress_activity</span> Carregando...`;
-            btn.disabled = true;
-
-            setTimeout(() => {
-                btn.innerHTML = originalContent;
-                btn.disabled = false;
-                alert('Bem-vindo à Paróquia!');
-            }, 1500);
-        });
     </script>
 </body>
 
