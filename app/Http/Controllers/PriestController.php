@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Priest;
 use Illuminate\Http\Request;
 
 class PriestController extends Controller
@@ -11,7 +12,8 @@ class PriestController extends Controller
      */
     public function index()
     {
-        return view('priest.index');
+        $priests = Priest::paginate(15);
+        return view('priest.index', compact('priests'));
     }
 
     /**
@@ -19,7 +21,7 @@ class PriestController extends Controller
      */
     public function create()
     {
-        //
+        return view('priest.create');
     }
 
     /**
@@ -27,7 +29,15 @@ class PriestController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'max:100'],
+            'function' => ['required', 'string', 'max:50'],
+            'cellphone' => ['required', 'string', 'max:20', 'unique:priests,cellphone'],
+        ]);
+
+        Priest::create($validated);
+
+        return redirect()->route('priests.index')->with('success', 'Sacerdote cadastrado com sucesso!');
     }
 
     /**

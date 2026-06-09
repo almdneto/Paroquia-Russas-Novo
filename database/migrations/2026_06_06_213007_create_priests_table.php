@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('priests', function (Blueprint $table) {
             $table->id();
+            $table->string('name', 100);
+            $table->string('function', 50);
+            $table->string('cellphone', 20)->unique();
             $table->timestamps();
         });
     }
