@@ -59,8 +59,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/priests/create', [App\Http\Controllers\PriestController::class, 'create'])->name('priests.create');
     Route::post('/priests', [App\Http\Controllers\PriestController::class, 'store'])->name('priests.store');
 
-    Route::get('/priests/{id}/edit', [App\Http\Controllers\PriestController::class, 'edit'])->name('priests.edit');
-    Route::put('/priests/{id}', [App\Http\Controllers\PriestController::class, 'update'])->name('priests.update');
+    Route::get('/priests/{priest}/edit', [App\Http\Controllers\PriestController::class, 'edit'])->name('priests.edit');
+    Route::put('/priests/{priest}', [App\Http\Controllers\PriestController::class, 'update'])->name('priests.update');
 
-    Route::delete('/priests/{id}', [App\Http\Controllers\PriestController::class, 'destroy'])->name('priests.destroy');
+    Route::delete('/priests/{priest}', [App\Http\Controllers\PriestController::class, 'destroy'])->name('priests.destroy');
 });

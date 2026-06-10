@@ -49,12 +49,17 @@
                                 <td class="px-lg py-md text-on-surface-variant font-body-md">{{ $priest->cellphone }}</td>
                                 <td class="px-lg py-md text-right">
                                     <div class="flex justify-end gap-sm opacity-60 group-hover:opacity-100 transition-opacity">
-                                        <button class="p-xs hover:bg-surface-container rounded-lg text-primary" title="Editar">
+                                        <a href="{{ route('priests.edit', $priest->id) }}"
+                                            class="p-xs hover:bg-surface-container rounded-lg text-primary" title="Editar">
                                             <span class="material-symbols-outlined text-[20px]" data-icon="edit">edit</span>
-                                        </button>
-                                        <button class="p-xs hover:bg-error-container rounded-lg text-error" title="Excluir">
-                                            <span class="material-symbols-outlined text-[20px]" data-icon="delete">delete</span>
-                                        </button>
+                                        </a>
+                                        <form action="{{ route('priests.destroy', $priest->id) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button class="p-xs cursor-pointer hover:bg-error-container rounded-lg text-error" title="Excluir">
+                                                <span class="material-symbols-outlined text-[20px]" data-icon="delete">delete</span>
+                                            </button>
+                                        </form>
                                     </div>
                                 </td>
                             </tr>

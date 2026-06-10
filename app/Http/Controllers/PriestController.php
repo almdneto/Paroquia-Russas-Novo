@@ -32,7 +32,7 @@ class PriestController extends Controller
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:100'],
             'function' => ['required', 'string', 'max:50'],
-            'cellphone' => ['required', 'string', 'max:20', 'unique:priests,cellphone'],
+            'cellphone' => ['required', 'string', 'max:16', 'regex:/^\(\d{2}\) \d \d{4}-\d{4}$/', 'unique:priests,cellphone'],
         ]);
 
         Priest::create($validated);
@@ -51,24 +51,33 @@ class PriestController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Priest $priest)
     {
-        //
+        return view('priest.edit', compact('priest'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Priest $priest)
     {
-        //
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'max:100'],
+            'function' => ['required', 'string', 'max:50'],
+            'cellphone' => ['required', 'string', 'max:16', 'regex:/^\(\d{2}\) \d \d{4}-\d{4}$/', 'unique:priests,cellphone,' . $priest->id],
+        ]);
+
+        $priest->update($validated);
+
+        return redirect()->route('priests.index')->with('success', 'Sacerdote atualizado com sucesso!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Priest $priest)
     {
-        //
+        $priest->delete();
+        return redirect()->route('priests.index')->with('success', 'Sacerdote removido com sucesso!');
     }
 }

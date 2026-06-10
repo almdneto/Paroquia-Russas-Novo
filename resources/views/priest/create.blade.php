@@ -76,8 +76,9 @@
                             </label>
                             <input
                                 class="w-full bg-surface border border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary rounded-lg px-md py-sm transition-all font-body-md text-body-md outline-none"
-                                id="cellphone" name="cellphone" placeholder="(88) 99999-9999" type="tel"
-                                value="{{ old('cellphone') }}" maxlength="20" required />
+                                id="cellphone" name="cellphone" placeholder="(88) 9 9999-9999" type="tel"
+                                value="{{ old('cellphone') }}" maxlength="16" inputmode="numeric"
+                                pattern="\([0-9]{2}\) [0-9] [0-9]{4}-[0-9]{4}" required />
                             @error('cellphone')
                                 <p class="text-sm text-red-600">{{ $message }}</p>
                             @enderror
@@ -112,4 +113,37 @@
             </form>
         </div>
     </div>
+    <script>
+        const cellphoneInput = document.querySelector('#cellphone');
+
+        const formatCellphone = (value) => {
+            const digits = value.replace(/\D/g, '').slice(0, 11);
+
+            if (digits.length === 0) {
+                return '';
+            }
+
+            if (digits.length <= 2) {
+                return digits.replace(/^(\d{0,2})/, '($1');
+            }
+
+            if (digits.length <= 3) {
+                return digits.replace(/^(\d{2})(\d{0,1})/, '($1) $2');
+            }
+
+            if (digits.length <= 7) {
+                return digits.replace(/^(\d{2})(\d)(\d{0,4})/, '($1) $2 $3');
+            }
+
+            return digits.replace(/^(\d{2})(\d)(\d{4})(\d{0,4})/, '($1) $2 $3-$4');
+        };
+
+        cellphoneInput?.addEventListener('input', (event) => {
+            event.target.value = formatCellphone(event.target.value);
+        });
+
+        if (cellphoneInput?.value) {
+            cellphoneInput.value = formatCellphone(cellphoneInput.value);
+        }
+    </script>
 @endsection
