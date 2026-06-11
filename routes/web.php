@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\LocationController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -43,15 +44,15 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::delete('/calendar/{id}', [App\Http\Controllers\CalendarController::class, 'destroy'])->name('calendar.destroy');
 
     // Rotas para as igrejas
-    Route::get('/churches', [App\Http\Controllers\ChurchController::class, 'index'])->name('churches.index');
+    Route::get('/location', [App\Http\Controllers\LocationController::class, 'index'])->name('location.index');
 
-    Route::get('/churches/create', [App\Http\Controllers\ChurchController::class, 'create'])->name('churches.create');
-    Route::post('/churches', [App\Http\Controllers\ChurchController::class, 'store'])->name('churches.store');
+    Route::get('/location/create', [App\Http\Controllers\LocationController::class, 'create'])->name('location.create');
+    Route::post('/location', [App\Http\Controllers\LocationController::class, 'store'])->name('location.store');
 
-    Route::get('/churches/{id}/edit', [App\Http\Controllers\ChurchController::class, 'edit'])->name('churches.edit');
-    Route::put('/churches/{id}', [App\Http\Controllers\ChurchController::class, 'update'])->name('churches.update');
+    Route::get('/location/{id}/edit', [App\Http\Controllers\LocationController::class, 'edit'])->name('location.edit');
+    Route::put('/location/{id}', [App\Http\Controllers\LocationController::class, 'update'])->name('location.update');
 
-    Route::delete('/churches/{id}', [App\Http\Controllers\ChurchController::class, 'destroy'])->name('churches.destroy');
+    Route::delete('/location/{id}', [App\Http\Controllers\LocationController::class, 'destroy'])->name('location.destroy');
 
     // Rotas para os padres
     Route::get('/priests', [App\Http\Controllers\PriestController::class, 'index'])->name('priests.index');

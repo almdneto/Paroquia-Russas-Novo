@@ -27,12 +27,12 @@
         </a>
 
         {{-- Igrejas --}}
-        <a href="{{ route('churches.index') }}" class="flex items-center gap-md px-md py-sm rounded-xl transition-colors
-            {{ request()->routeIs('churches.*')
+        <a href="{{ route('location.index') }}" class="flex items-center gap-md px-md py-sm rounded-xl transition-colors
+            {{ request()->routeIs('location.*')
     ? 'bg-secondary-container text-on-secondary-container scale-98 transition-transform duration-200'
     : 'text-on-surface-variant hover:bg-surface-container-high' }}">
 
-            <span class="material-symbols-outlined" @if (request()->routeIs('churches.*'))
+            <span class="material-symbols-outlined" @if (request()->routeIs('location.*'))
             style="font-variation-settings: 'FILL' 1;" @endif>
                 church
             </span>
