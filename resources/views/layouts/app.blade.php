@@ -29,7 +29,7 @@
         <x-header />
 
         {{-- Conteúdo da página --}}
-        <div class="p-xl max-w-max-content-width w-full mx-auto space-y-xl">
+        <div class="p-xl max-w-full w-full mx-auto space-y-xl">
             @if (session('success'))
                 <div class="rounded-lg border border-green-200 bg-green-50 px-md py-sm text-sm text-green-700">
                     {{ session('success') }}

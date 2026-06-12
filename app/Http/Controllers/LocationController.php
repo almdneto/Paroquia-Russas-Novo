@@ -13,8 +13,6 @@ class LocationController extends Controller
      */
     public function index()
     {
-        // Alterado de 'location.index' para 'locations.index' (padrão plural)
-        // E mudamos a variável para $locations (plural) para fazer sentido com a paginação
         $locations = Location::paginate(15);
         return view('location.index', compact('locations'));
     }
@@ -24,7 +22,7 @@ class LocationController extends Controller
      */
     public function create()
     {
-        return view('locations.create');
+        return view('location.create');
     }
 
     /**
@@ -50,7 +48,7 @@ class LocationController extends Controller
         // 3. Cria o registro com os dados validados (e com o image_path se houver)
         Location::create($validated);
 
-        return redirect()->route('locations.index')->with('success', 'Localização criada com sucesso!');
+        return redirect()->route('location.index')->with('success', 'Localização criada com sucesso!');
     }
 
     /**
@@ -58,7 +56,7 @@ class LocationController extends Controller
      */
     public function edit(Location $location)
     {
-        return view('locations.edit', compact('location'));
+        return view('location.edit', compact('location'));
     }
 
     /**
@@ -85,7 +83,7 @@ class LocationController extends Controller
         // O seu método update já estava correto, usando $validated perfeitamente!
         $location->update($validated);
 
-        return redirect()->route('locations.index')->with('success', 'Localização atualizada com sucesso!');
+        return redirect()->route('location.index')->with('success', 'Localização atualizada com sucesso!');
     }
 
     /**
@@ -100,6 +98,6 @@ class LocationController extends Controller
 
         $location->delete();
 
-        return redirect()->route('locations.index')->with('success', 'Localização excluída com sucesso!');
+        return redirect()->route('location.index')->with('success', 'Localização excluída com sucesso!');
     }
 }
